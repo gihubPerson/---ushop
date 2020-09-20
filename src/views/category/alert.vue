@@ -20,7 +20,7 @@
         <el-form-item label="分类图片" label-width="100px">
           <!-- 上传 -->
           <el-upload
-          ref="upload"
+            ref="upload"
             action="https://jsonplaceholder.typicode.com/posts/"
             list-type="picture-card"
             :file-list="fileList"
@@ -149,7 +149,9 @@ export default {
     //点击x按钮清空内容
     beforeClose(done) {
       this.formInfo = { ...resetForm };
+      
       this.$refs.upload.clearFiles()
+
       done();
     },
 
@@ -157,7 +159,9 @@ export default {
     cancle() {
       this.formInfo = { ...resetForm };
       this.isShow = false;
+   
       this.$refs.upload.clearFiles()
+
     },
 
     imgChange(file) {

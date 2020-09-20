@@ -122,7 +122,7 @@ router.beforeEach((to,from,next)=>{
   window.scroll(0,0)
   document.title = to.meta.title
   if(to.meta.isLogin){
-    if(localStorage.getItem('userinfo')){
+    if(localStorage.getItem('token')){
       next()
     }else{
       next('/login?towher=' + to.path)

@@ -33,6 +33,10 @@ export default {
      this.$refs.alert.isShow = true
      this.$refs.alert.isAdd = false
      this.$refs.alert.setinfo(data)
+     this.$refs.alert.fileList = [{
+       name:'',
+       url:this.$server + data.img
+     }]
    }
   },
   components: {

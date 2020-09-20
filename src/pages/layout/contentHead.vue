@@ -18,13 +18,12 @@
     </div>
     <el-dropdown>
       <span class="el-dropdown-link">
-        下拉菜单
+        {{username}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item> <i class="el-icon-full-screen"></i> 全屏</el-dropdown-item>
-        <el-dropdown-item> <i class="el-icon-switch-button"></i> 退出</el-dropdown-item>
-        
+        <el-dropdown-item><span @click="exit"><i class="el-icon-switch-button"></i> 退出</span> </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -33,13 +32,26 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      username:'请登录'
+    };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.username = localStorage.getItem('username')
+  },
   methods: {
+    
       toggle(){
+        
           this.$emit('toggle')
+      },
+      exit(){
+        localStorage.removeItem('username')
+        localStorage.removeItem('token')
+        this.$router.push({
+          path:'/login'
+        })
       }
   },
   components: {},
