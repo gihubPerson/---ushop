@@ -13,7 +13,7 @@ let router = new Router({
     {
       path:'/',
       component:()=>import('@/pages/layout'),
-      redirect:'/index',
+      redirect:'/login',
       children:[
         {
           path:'/index',
@@ -123,7 +123,18 @@ router.beforeEach((to,from,next)=>{
   document.title = to.meta.title
   if(to.meta.isLogin){
     if(localStorage.getItem('token')){
-      next()
+      let whiteList = JSON.parse(localStorage.getItem('white_list'))
+      if(to.path == '/index'){
+        next()
+      }else{
+        if(whiteList.includes(to.path)){
+        next()
+      }else{
+        alert('你没有足够的权限')
+        next('/index')
+      }
+      }
+      
     }else{
       next('/login?towher=' + to.path)
     }

@@ -48,6 +48,11 @@ export default {
     async login() {
       let res = await toLogin(this.userInfo)
       if(res.code == 200){
+        //存储白名单
+        localStorage.setItem("white_list", JSON.stringify(res.list.menus_url));
+        //存储菜单列表
+        localStorage.setItem("menulist", JSON.stringify(res.list.menus));
+
         localStorage.setItem("token", JSON.stringify(res.list.token));
         localStorage.setItem("username", res.list.username);
           this.$router.replace({

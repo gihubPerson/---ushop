@@ -10,6 +10,7 @@ let http = axios.create({
 http.interceptors.request.use((config)=>{
     if(config.url != '/login'){
         config.headers.authorization = localStorage.getItem('token')
+        
     }
     return config
 })

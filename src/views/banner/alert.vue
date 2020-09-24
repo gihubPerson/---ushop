@@ -2,20 +2,10 @@
   <div>
     <el-dialog :before-close="beforeClose" :title="isAdd?'增加':'修改'" :visible.sync="isShow">
       <el-form ref="form" :model="formInfo" :rules="rules">
-        <el-form-item label="上级分类" label-width="100px">
-          <el-select v-model="formInfo.pid">
-            <el-option label="顶级分类" :value="0"></el-option>
-            <el-option
-              v-for="(item,idx) in cateList"
-              :key="idx"
-              :label="item.catename"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        
 
-        <el-form-item label="角色名称" label-width="100px" prop="catename">
-          <el-input v-model="formInfo.catename" autocomplete="off"></el-input>
+        <el-form-item label="轮播图名称" label-width="100px" prop="title">
+          <el-input v-model="formInfo.title" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="分类图片" label-width="100px">
           <!-- 上传 -->
@@ -52,12 +42,11 @@
 </template>
 
 <script>
-import { add_cate_list, edit_cate_list } from "@/axios/apis/cate";
+import { add_banner_list, edit_banner_list } from "@/axios/apis/banner";
 import { mapActions, mapGetters } from "vuex";
 let defaultForm = {
-  pid: 0,
+  title: '',
   img: "",
-  catename: "",
   status: 1,
 };
 let resetForm = {
@@ -72,8 +61,8 @@ export default {
         ...defaultForm,
       },
       rules: {
-        catename: [
-          { required: true, message: "请输入商品分类名称", trigger: "blur" },
+        title: [
+          { required: true, message: "请输入轮播图名称", trigger: "blur" },
         ],
       },
       dialogImageUrl: "",
@@ -83,18 +72,18 @@ export default {
     };
   },
   created() {
-    if (!this.cateList.length) {
-      this.get_cate_list();
+    if (!this.bannerList.length) {
+      this.get_banner_list();
     }
   },
   computed: {
     ...mapGetters({
-      cateList: "cate/catelist",
+      bannerList: "banner/bannerlist",
     }),
   },
   methods: {
     ...mapActions({
-      get_cate_list: "cate/get_cate_list",
+      get_banner_list: "banner/get_banner_list",
     }),
 
     //给表单赋值数据
@@ -117,24 +106,24 @@ export default {
           if (this.isAdd) {
             //如果是添加,就走添加过程
             
-            let res = await add_cate_list(this.toFormData({ ...this.formInfo }));
+            let res = await add_banner_list(this.toFormData({ ...this.formInfo }));
             if (res.code == 200) {
               this.$message.success("添加成功");
               //点击确定按钮  关闭弹窗  清除数据
               this.isShow = false;
               this.formInfo = resetForm;
-              this.get_cate_list();
+              this.get_banner_list();
             } else {
               this.$message.warning(res.msg);
             }
           } else {
             //如果是修改
-            let res = await edit_cate_list(this.toFormData({ ...this.formInfo }));
+            let res = await edit_banner_list(this.toFormData({ ...this.formInfo }));
             if (res.code == 200) {
               this.$message.success("修改成功");
               this.isShow = false;
               this.formInfo = { ...resetForm };
-              this.get_cate_list();
+              this.get_banner_list();
             } else {
               this.$message.warning(res.msg);
             }
@@ -163,12 +152,13 @@ export default {
       this.$refs.upload.clearFiles()
 
     },
-
+//图片
     imgChange(file) {
       this.file = file.raw;
     },
     handleRemove(file, fileList) {
       this.fileList = []
+      console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;

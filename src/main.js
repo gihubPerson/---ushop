@@ -17,6 +17,13 @@ Vue.use(ElementUI);
 //服务器地址前缀
 Vue.prototype.$server = 'http://localhost:3030'
 
+//注册过滤器
+import filterObj from './filters'
+for(let k in filterObj){
+  Vue.filter(k,filterObj[k])
+}
+
+
 //引入vuex仓库
 import store from '@/store'
 

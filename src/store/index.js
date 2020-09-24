@@ -10,13 +10,16 @@ import user from './models/user'
 import cate from './models/cate'
 import specs from './models/specs'
 import goods from './models/goods'
+import member from './models/member'
+import banner from './models/banner'
+import seck from './models/seck'
 let store = new Vuex.Store({
     state:{},
     getters:{},
     mutations:{},
     actions:{},
     modules:{
-        menu,role,user,cate,specs,goods
+        menu,role,user,cate,specs,goods,member,banner,seck
     }
 })
 

@@ -9,8 +9,16 @@
           <img style="width:80px" :src="$server + scope.row.img" alt />
         </template>
       </el-table-column>
-      <el-table-column prop="price" label="销售价格" width="100"></el-table-column>
-      <el-table-column prop="market_price" label="市场价格" width="100"></el-table-column>
+      <el-table-column prop="price" label="销售价格" width="100">
+        <template slot-scope="scope">
+          {{scope.row.price | tofixed}}
+        </template>
+      </el-table-column>
+      <el-table-column label="市场价格" width="100">
+        <template slot-scope="scope">
+          {{scope.row.market_price | tofixed}}
+        </template>
+      </el-table-column>
       <el-table-column label="是否新品" width="100">
         <template slot-scope="scope">
           <el-switch
